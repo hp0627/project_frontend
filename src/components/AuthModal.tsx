@@ -27,7 +27,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose }) => {
     try {
       if (isLogin) {
         const userProfile = await signIn(email, password);
-        // Redirect based on user role
         if (userProfile.role === 'restaurant_owner') {
           navigate('/restaurant-dashboard');
         } else {
@@ -37,7 +36,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose }) => {
         await signUp(email, password, fullName, userType);
         setIsLogin(true);
         setError('');
-        // Show success message or auto-login
       }
       onClose();
     } catch (err: any) {
@@ -64,52 +62,52 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose }) => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                Account Type
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => setUserType('customer')}
-                  className={`p-4 border-2 rounded-lg flex flex-col items-center space-y-2 transition-colors ${
-                    userType === 'customer'
-                      ? 'border-orange-500 bg-orange-50 text-orange-700'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <User className="h-6 w-6" />
-                  <span className="text-sm font-medium">Customer</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setUserType('restaurant_owner')}
-                  className={`p-4 border-2 rounded-lg flex flex-col items-center space-y-2 transition-colors ${
-                    userType === 'restaurant_owner'
-                      ? 'border-orange-500 bg-orange-50 text-orange-700'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <Store className="h-6 w-6" />
-                  <span className="text-sm font-medium">Restaurant</span>
-                </button>
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Account Type
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setUserType('customer')}
+                    className={`p-4 border-2 rounded-lg flex flex-col items-center space-y-2 transition-colors ${
+                      userType === 'customer'
+                        ? 'border-orange-500 bg-orange-50 text-orange-700'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <User className="h-6 w-6" />
+                    <span className="text-sm font-medium">Customer</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setUserType('restaurant_owner')}
+                    className={`p-4 border-2 rounded-lg flex flex-col items-center space-y-2 transition-colors ${
+                      userType === 'restaurant_owner'
+                        ? 'border-orange-500 bg-orange-50 text-orange-700'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <Store className="h-6 w-6" />
+                    <span className="text-sm font-medium">Restaurant</span>
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
 
-          {!isLogin && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Full Name
-              </label>
-              <input
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-orange-500"
-                required={!isLogin}
-              />
-            </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-orange-500"
+                  required
+                />
+              </div>
+            </>
           )}
 
           <div>
@@ -161,7 +159,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose }) => {
             }}
             className="text-orange-600 hover:text-orange-700 font-medium"
           >
-            {isLogin ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
+            {isLogin
+              ? "Don't have an account? Sign up"
+              : 'Already have an account? Sign in'}
           </button>
         </div>
       </div>
@@ -169,4 +169,4 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose }) => {
   );
 };
 
-export default AuthModal;
+export default AuthModal;   // 👈 add this line
